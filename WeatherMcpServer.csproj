@@ -19,6 +19,16 @@
         <Description>An MCP server using the MCP C# SDK.</Description>
     </PropertyGroup>
 
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
     <!-- Include additional files for browsing the MCP server. -->
     <ItemGroup>
         <None Include=".mcp\server.json" Pack="true" PackagePath="/.mcp/" />
@@ -29,6 +39,8 @@
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.0-preview.6.25358.103" />
         <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.8" />
         <PackageReference Include="ModelContextProtocol" Version="0.3.0-preview.3" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/draft/2025-07-09/server.json",
+  "description": "dotnet-test-assignment",
+  "name": "io.github.eagor68/dotnet-test-assignment",
+  "packages": [
+    {
+      "registry_name": "nuget",
+      "name": "<your package ID here>",
+      "version": "0.1.0-beta",
+      "package_arguments": [],
+      "environment_variables": []
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/eagor68/dotnet-test-assignment",
+    "source": "github"
+  },
+  "version_detail": {
+    "version": "0.1.0-beta"
+  }
+}
