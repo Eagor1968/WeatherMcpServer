@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using System.Diagnostics;
 using System.Reflection;
 using WeatherMcpServer.Tools;
 
@@ -36,8 +37,8 @@ builder.Services
     .WithTools<RandomNumberTools>()
     .WithTools<WeatherTools>();
 
-var host  = builder.Build();
 
+builder.Services.AddSingleton<WeatherTools>();
 
 // Определяем путь к каталогу, где лежит сервер (не клиента!)
 var serverDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -45,4 +46,23 @@ var appSettingsPath = Path.Combine(serverDirectory!, "appsettings.json");
 
 // Добавляем конфигурацию из файла в каталоге сервера
 builder.Configuration.AddJsonFile(appSettingsPath, optional: false, reloadOnChange: true);
+
+var host  = builder.Build();
+// === ВЫЗОВ ДЛЯ ОТЛАДКИ: ===
+try
+{
+  var weatherTools = host.Services.GetRequiredService<WeatherTools>();
+  //var result = await weatherTools.GetCurrentWeather("Samara", "RU");
+  //var result = await weatherTools.GetWeatherForecast("Samara", "RU");
+  //var result = await weatherTools.GetWeatherAlerts("Samara", "RU");
+
+  //Log.Information("Debug call result: {Result}", result);
+}
+catch (Exception ex)
+{
+  Log.Error(ex, "Error during debug call to GetCurrentWeather");
+}
+
+
 await host.RunAsync();
+

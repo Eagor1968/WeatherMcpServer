@@ -19,6 +19,10 @@
         <Description>An MCP server using the MCP C# SDK.</Description>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <Optimize>False</Optimize>
+    </PropertyGroup>
+
     <ItemGroup>
       <None Remove="appsettings.json" />
     </ItemGroup>
