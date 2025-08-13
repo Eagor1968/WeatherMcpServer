@@ -47,6 +47,4 @@ Alerts found in Samara,RU:
 4. Местами ливень event:Дождь severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
 
 
-I implemented GetCurrentWeather and GetWeatherForecast using openweathermap API but this API does not allow free of charge usage for alerts so I have implemented GetWeatherAlerts using api.weatherapi.com
-
-
+I implemented GetCurrentWeather and GetWeatherForecast using the OpenWeatherMap API, but this API does not allow free usage for alerts, so I implemented GetWeatherAlerts using api.weatherapi.com.
