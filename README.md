@@ -29,7 +29,7 @@ Date/Time=18.08.25 16:00, Temperature:32,3, overcast clouds"
 
 --- Brief documentation of implementation approach
 
-MCP Server is supposed to be used by MCP client integrated into AI especially in Code Pylot, but Code Pylot does not work in Russia so I had to create a MCP Client
+MCP Server is supposed to be used by MCP client integrated into AI especially in Copilot, but Copilot does not work in Russia so I had to create a MCP Client
 it is here https://github.com/Eagor1968/McpFullClient
 it looks as below
 [SERVER] Tools list received:
@@ -49,4 +49,5 @@ Alerts found in Samara,RU:
 4. Местами ливень event:Дождь severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
 
 
-I implemented GetCurrentWeather and GetWeatherForecast using the OpenWeatherMap API, but this API does not allow free usage for alerts, so I implemented GetWeatherAlerts using api.weatherapi.com.
+I implemented GetCurrentWeather and GetWeatherForecast using the OpenWeatherMap API, but this 
+API does not allow free usage for alerts, so I implemented GetWeatherAlerts using api.weatherapi.com.
