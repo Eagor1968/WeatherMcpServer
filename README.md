@@ -4,9 +4,11 @@ source code is here https://github.com/Eagor1968/WeatherMcpServer
 Dotnet 9.0 should be installsed
 to build:
 dotnet build
+dotnet build -p:DefineConstants="DEBUG"
 
 to run:
 dotnet run
+
 
 logs are contained in 
 WeatherMcpServer\logs\server-202508DD.log 
