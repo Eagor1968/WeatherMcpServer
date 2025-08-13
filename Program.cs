@@ -8,10 +8,9 @@ using WeatherMcpServer.Tools;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-
 // Configure all logs to go to stderr (stdout is used for the MCP protocol messages).
 
-// Настройка Serilog
+// Serilog configuration
 Log.Logger = new LoggerConfiguration()
     .WriteTo.File(
         path: "logs/server-.log",
@@ -23,9 +22,9 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
     .CreateLogger();
 
-// Подключаем Serilog к DI
-builder.Logging.ClearProviders(); // Убираем Console и др.
-builder.Logging.AddSerilog();     // Добавляем Serilog
+// Connect Serilog to DI
+builder.Logging.ClearProviders(); // Remove Console and other default providers
+builder.Logging.AddSerilog();     // Add Serilog
 
 builder.Services.AddHttpClient();
 
@@ -36,31 +35,20 @@ builder.Services
     .WithTools<RandomNumberTools>()
     .WithTools<WeatherTools>();
 
-
 builder.Services.AddSingleton<WeatherTools>();
 
-// Определяем путь к каталогу, где лежит сервер (не клиента!)
+// Determine the path to the directory where the server is located (not the client!)
 var serverDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 var appSettingsPath = Path.Combine(serverDirectory!, "appsettings.json");
 
-// Добавляем конфигурацию из файла в каталоге сервера
+// Add configuration from the file in the server directory
 builder.Configuration.AddJsonFile(appSettingsPath, optional: false, reloadOnChange: true);
 
-var host  = builder.Build();
-#if DEBUG
-// === ВЫЗОВ ДЛЯ ОТЛАДКИ: ===
-try
-{
-  var weatherTools = host.Services.GetRequiredService<WeatherTools>();
-  var result = await weatherTools.GetWeatherAlerts("Samara", "RU");
+var host = builder.Build();
 
-  Log.Information("Debug call result: {@Result}", result);
-}
-catch (Exception ex)
-{
-  Log.Error(ex, "Error during debug call to GetCurrentWeather");
-}
+#if DEBUG
+// === DEBUG CALLS: ===
+await WeatherDebugRunner.RunDebugCallsAsync(host);
 #endif
 
 await host.RunAsync();
-

@@ -27,7 +27,6 @@ public class WeatherTools
     _weatherApiKey = configuration["WeatherAPI:ApiKey"] ?? throw new Exception("WeatherAPI API key not configured");
   }
 
-
   [McpServerTool]
   [Description("Gets current weather conditions for the specified city.")]
   public async Task<string> GetCurrentWeather(
@@ -36,7 +35,6 @@ public class WeatherTools
   {
     try
     {
-
       string location = getLocation(city, countryCode);
 
       var url = $"https://api.openweathermap.org/data/2.5/weather?" +
@@ -82,7 +80,6 @@ public class WeatherTools
                 $"q={Uri.EscapeDataString(location)}&" +
                 $"appid={_weatherMapApiKey}&units=metric";
 
-
       _logger.LogInformation("Requesting forecast for: {Location}", location);
 
       var response = await _httpClient.GetFromJsonAsync<HourlyForecastResponse>(url);
@@ -116,13 +113,11 @@ public class WeatherTools
         : $"{city},{countryCode}";
   }
 
-
   [McpServerTool]
   [Description("Gets weather alerts for the specified city.")]
   public async Task<string> GetWeatherAlerts(
         [Description("The city name to get forecast for")] string city,
         [Description("Optional: Country code (e.g., 'US', 'UK')")] string? countryCode = null)
-
   {
     try
     {
@@ -130,7 +125,7 @@ public class WeatherTools
       var url = $"https://api.weatherapi.com/v1/forecast.json" +
                 $"?key={_weatherApiKey}&q={Uri.EscapeDataString(location)}&&alerts=yes";
 
-      // Запрос с десериализацией
+      // Request with deserialization
       var options = new JsonSerializerOptions
       {
         PropertyNameCaseInsensitive = true
@@ -155,7 +150,6 @@ public class WeatherTools
       }
 
       return result.ToString();
-
     }
     catch (Exception ex)
     {
@@ -163,25 +157,5 @@ public class WeatherTools
       return $"Could not retrieve alerts: {ex.Message}";
     }
   }
-
-  // Модели для десериализации ответа OpenWeatherMap
-  private record OpenWeatherResponse(
-      MainData Main,
-      WeatherDescription[] Weather);
-
-  private record MainData(
-      float Temp,
-      int Humidity);
-
-  private record WeatherDescription(
-      string Description);
-
-  public record GeoItem
-  (
-    string name,
-    float lat,
-    float lon,
-    string country
-  );
 
 }
