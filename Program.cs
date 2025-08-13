@@ -3,7 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using System.Diagnostics;
 using System.Reflection;
 using WeatherMcpServer.Tools;
 
@@ -48,21 +47,20 @@ var appSettingsPath = Path.Combine(serverDirectory!, "appsettings.json");
 builder.Configuration.AddJsonFile(appSettingsPath, optional: false, reloadOnChange: true);
 
 var host  = builder.Build();
+#if DEBUG
 // === ¬€«Œ¬ ƒÀﬂ Œ“À¿ƒ »: ===
 try
 {
   var weatherTools = host.Services.GetRequiredService<WeatherTools>();
-  //var result = await weatherTools.GetCurrentWeather("Samara", "RU");
-  //var result = await weatherTools.GetWeatherForecast("Samara", "RU");
-  //var result = await weatherTools.GetWeatherAlerts("Samara", "RU");
+  var result = await weatherTools.GetWeatherAlerts("Samara", "RU");
 
-  //Log.Information("Debug call result: {Result}", result);
+  Log.Information("Debug call result: {@Result}", result);
 }
 catch (Exception ex)
 {
   Log.Error(ex, "Error during debug call to GetCurrentWeather");
 }
-
+#endif
 
 await host.RunAsync();
 

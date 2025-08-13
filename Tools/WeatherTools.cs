@@ -2,10 +2,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
-using System.Globalization;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace WeatherMcpServer.Tools;
 
@@ -37,10 +36,8 @@ public class WeatherTools
   {
     try
     {
-      
-      var location = string.IsNullOrEmpty(countryCode)
-          ? city
-          : $"{city},{countryCode}";
+
+      string location = getLocation(city, countryCode);
 
       var url = $"https://api.openweathermap.org/data/2.5/weather?" +
                 $"q={Uri.EscapeDataString(location)}&" +
@@ -79,10 +76,7 @@ public class WeatherTools
   {
     try
     {
-      
-      var location = string.IsNullOrEmpty(countryCode)
-          ? city
-          : $"{city},{countryCode}";
+      string location = getLocation(city, countryCode);
 
       var url = $"https://api.openweathermap.org/data/2.5/forecast?" +
                 $"q={Uri.EscapeDataString(location)}&" +
@@ -115,69 +109,53 @@ public class WeatherTools
     }
   }
 
-  //public async Task<List<Alert>> GetWeatherAlerts(string location)
-  //{
-  //  // Формируем URL
-  //  var url = $"https://api.weatherapi.com/v1/forecast.json" +
-  //            $"?key={_weatherApiKey}&q={Uri.EscapeDataString(location)}&days=3&alerts=yes&lang=ru";
-
-  //  // Запрос с десериализацией
-  //  var options = new JsonSerializerOptions
-  //  {
-  //    PropertyNameCaseInsensitive = true
-  //  };
-
-  //  var response = await _httpClient.GetFromJsonAsync<WeatherApiResponse>(url, options);
-
-  //  return response?.alerts?.alert ?? new List<Alert>();
-  //}
+  private static string getLocation(string city, string? countryCode)
+  {
+    return string.IsNullOrEmpty(countryCode)
+        ? city
+        : $"{city},{countryCode}";
+  }
 
 
   [McpServerTool]
   [Description("Gets weather alerts for the specified city.")]
-  public async Task<string> GetWeatherAlerts_openweathermap(
+  public async Task<string> GetWeatherAlerts(
         [Description("The city name to get forecast for")] string city,
         [Description("Optional: Country code (e.g., 'US', 'UK')")] string? countryCode = null)
+
   {
     try
     {
-      var geoItem = await GetGeoItem(city, countryCode);
+      string location = getLocation(city, countryCode);
+      var url = $"https://api.weatherapi.com/v1/forecast.json" +
+                $"?key={_weatherApiKey}&q={Uri.EscapeDataString(location)}&&alerts=yes";
 
-      var location = string.IsNullOrEmpty(countryCode)
-          ? city
-          : $"{city},{countryCode}";
-
-
-      var url = $"https://api.openweathermap.org/data/2.5/onecall?" +
-                $"lat={geoItem.lat.ToString(CultureInfo.InvariantCulture)}&lon={geoItem.lon.ToString(CultureInfo.InvariantCulture)}&" +
-                $"appid={_weatherMapApiKey}&units=metric";
-
-
-      _logger.LogInformation("Requesting alerts for: {Location}", location);
-
-      var response = await _httpClient.GetFromJsonAsync<OneCallResponse>(url);
-
-      if (response == null)
+      // Запрос с десериализацией
+      var options = new JsonSerializerOptions
       {
-        _logger.LogError("Weather API returned null response");
-        return "Forecast data unavailable";
-      }
+        PropertyNameCaseInsensitive = true
+      };
 
-      var result = $"Alerts in {location}: ";
-      if (response.alerts.Length == 0)
+      var response = await _httpClient.GetFromJsonAsync<WeatherApiResponse>(url, options);
+      var alerts = response?.alerts?.alert ?? new List<Alert>();
+      var result = new StringBuilder();
+      if (alerts != null)
       {
-        result += " absent";
+        result.AppendLine($"Alerts found in {location}:");
+        int index = 1;
+        foreach (var alert in alerts)
+        {
+          result.AppendLine((index++) + ". " + alert.desc + " event:" + alert.@event + " severity:"
+            + alert.severity + " urgency:" + alert.urgency + " effective:" + alert.effective + " expires:" + alert.expires);
+        }
       }
       else
       {
-        foreach (var alert in response.alerts)
-        {
-          result += $"\n event:{alert.@event} start:{alert.start} end:{alert.end} description:{alert.description}";
-        }
+        result.AppendLine($"No alerts found in {location}");
       }
 
+      return result.ToString();
 
-      return result;
     }
     catch (Exception ex)
     {
@@ -185,89 +163,6 @@ public class WeatherTools
       return $"Could not retrieve alerts: {ex.Message}";
     }
   }
-
-
-  [McpServerTool]
-  [Description("Gets weather alerts for the specified city.")]
-  public async Task<string> OpenWeatherMap_GetWeatherAlerts(
-        [Description("The city name to get forecast for")] string city,
-        [Description("Optional: Country code (e.g., 'US', 'UK')")] string? countryCode = null)
-  {
-    try
-    {
-      var geoItem = await GetGeoItem(city, countryCode);
-      
-      var location = string.IsNullOrEmpty(countryCode)
-          ? city
-          : $"{city},{countryCode}";
-      
-
-      var url = $"https://api.openweathermap.org/data/2.5/onecall?" +
-                $"lat={geoItem.lat.ToString(CultureInfo.InvariantCulture)}&lon={geoItem.lon.ToString(CultureInfo.InvariantCulture)}&" +
-                $"appid={_weatherMapApiKey}&units=metric";
-
-
-      _logger.LogInformation("Requesting alerts for: {Location}", location);
-
-      var response = await _httpClient.GetFromJsonAsync<OneCallResponse>(url);
-
-      if (response == null)
-      {
-        _logger.LogError("Weather API returned null response");
-        return "Forecast data unavailable";
-      }
-
-      var result = $"Alerts in {location}: ";
-      if(response.alerts.Length == 0)
-      {
-        result += " absent";
-      } else
-      {
-        foreach(var alert in response.alerts)
-        {
-          result += $"\n event:{alert.@event} start:{alert.start} end:{alert.end} description:{alert.description}";
-        }
-      }
-
-
-        return result;
-    }
-    catch (Exception ex)
-    {
-      _logger.LogError(ex, "Error getting alerts for {City}", city);
-      return $"Could not retrieve alerts: {ex.Message}";
-    }
-  }
-
-
-  public async Task<GeoItem> GetGeoItem(
-        [Description("The city name to get forecast for")] string city,
-        [Description("Optional: Country code (e.g., 'US', 'UK')")] string? countryCode = null)
-  {
-    var location = string.IsNullOrEmpty(countryCode)
-        ? city
-        : $"{city},{countryCode}";
-
-    var url = $"https://api.openweathermap.org/geo/1.0/direct?" +
-              $"q={Uri.EscapeDataString(location)}&" +
-              $"appid={_weatherMapApiKey}&units=metric";
-
-    _logger.LogInformation("Requesting Geo codes for: {Location}", location);
-
-    var response = await _httpClient.GetFromJsonAsync<GeoItem[]>(url);
-
-    if (response == null || response.Length == 0)
-    {
-      _logger.LogError("Geo codes API returned null response");
-      return null;
-    }
-
-
-    return response[0];
-
-
-  }
-
 
   // Модели для десериализации ответа OpenWeatherMap
   private record OpenWeatherResponse(

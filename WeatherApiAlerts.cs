@@ -1,14 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WeatherMcpServer
+﻿namespace WeatherMcpServer
 {
-  using System.Net.Http;
-  using System.Net.Http.Json;
-  using System.Text.Json;
+  public record WeatherApiResponse(
+      AlertContainer alerts
+  );
 
-  
+  public record AlertContainer(
+      List<Alert> alert
+  );
+
+  public record Alert(
+      string headline,
+      string msgtype,
+      string severity,
+      string urgency,
+      string areas,
+      string category,
+      string @event,
+      DateTime effective,
+      DateTime expires,
+      string desc
+  );
+
+
 }
