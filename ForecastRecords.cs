@@ -22,7 +22,7 @@ namespace WeatherMcpServer
         SysInfo Sys,
         string DtTxt);
 
-    // Температура и давление
+
     public record MainData(
         double Temp,
         double FeelsLike,

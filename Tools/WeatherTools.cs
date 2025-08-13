@@ -39,7 +39,7 @@ public class WeatherTools
 
       var url = $"https://api.openweathermap.org/data/2.5/weather?" +
                 $"q={Uri.EscapeDataString(location)}&" +
-                $"appid={_weatherMapApiKey}&units=metric";
+                $"appid={_weatherMapApiKey}&units=metric&lang=en";
 
       _logger.LogInformation("Requesting weather for: {Location}", location);
 
@@ -78,7 +78,7 @@ public class WeatherTools
 
       var url = $"https://api.openweathermap.org/data/2.5/forecast?" +
                 $"q={Uri.EscapeDataString(location)}&" +
-                $"appid={_weatherMapApiKey}&units=metric";
+                $"appid={_weatherMapApiKey}&units=metric&lang=en";
 
       _logger.LogInformation("Requesting forecast for: {Location}", location);
 
@@ -123,7 +123,7 @@ public class WeatherTools
     {
       string location = getLocation(city, countryCode);
       var url = $"https://api.weatherapi.com/v1/forecast.json" +
-                $"?key={_weatherApiKey}&q={Uri.EscapeDataString(location)}&&alerts=yes";
+                $"?key={_weatherApiKey}&q={Uri.EscapeDataString(location)}&alerts=yes&lang=en";
 
       // Request with deserialization
       var options = new JsonSerializerOptions

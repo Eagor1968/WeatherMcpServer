@@ -19,10 +19,10 @@ Date/Time=13.08.25 19:00, Temperature:23,0, light rain
 Date/Time=18.08.25 16:00, Temperature:32,3, overcast clouds"
 
 2025-08-13 17:30:09 [Information]  Debug call alerts: "Alerts found in Samara,RU:
-1. Местами высокая пожарная опасность event:Пожарная опасность severity:Moderate urgency:Immediate effective:10.08.2025 15:05:00 expires:14.08.2025 19:00:00
-2. В ближайшие 1-3 часа местами ожидается гроза event:Гроза severity:Moderate urgency:Immediate effective:13.08.2025 5:06:00 expires:13.08.2025 22:00:00
-3. При грозе местами шквалистое усиление ветра порывы 15-20 м/с event:Ветер severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
-4. Местами ливень event:Дождь severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+1. РњРµСЃС‚Р°РјРё РІС‹СЃРѕРєР°СЏ РїРѕР¶Р°СЂРЅР°СЏ РѕРїР°СЃРЅРѕСЃС‚СЊ event:РџРѕР¶Р°СЂРЅР°СЏ РѕРїР°СЃРЅРѕСЃС‚СЊ severity:Moderate urgency:Immediate effective:10.08.2025 15:05:00 expires:14.08.2025 19:00:00
+2. Р’ Р±Р»РёР¶Р°Р№С€РёРµ 1-3 С‡Р°СЃР° РјРµСЃС‚Р°РјРё РѕР¶РёРґР°РµС‚СЃСЏ РіСЂРѕР·Р° event:Р“СЂРѕР·Р° severity:Moderate urgency:Immediate effective:13.08.2025 5:06:00 expires:13.08.2025 22:00:00
+3. РџСЂРё РіСЂРѕР·Рµ РјРµСЃС‚Р°РјРё С€РєРІР°Р»РёСЃС‚РѕРµ СѓСЃРёР»РµРЅРёРµ РІРµС‚СЂР° РїРѕСЂС‹РІС‹ 15-20 Рј/СЃ event:Р’РµС‚РµСЂ severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+4. РњРµСЃС‚Р°РјРё Р»РёРІРµРЅСЊ event:Р”РѕР¶РґСЊ severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
 "
 
 --- Brief documentation of implementation approach
@@ -37,14 +37,14 @@ it looks as below
 - get_current_weather - Gets current weather conditions for the specified city.
 
 Available tools: get_weather_alerts, get_random_number, get_weather_forecast, get_current_weather
-Введите имя инструмента для вызова (или q для выхода):
+Р’РІРµРґРёС‚Рµ РёРјСЏ РёРЅСЃС‚СЂСѓРјРµРЅС‚Р° РґР»СЏ РІС‹Р·РѕРІР° (РёР»Рё q РґР»СЏ РІС‹С…РѕРґР°):
 >
 
 Alerts found in Samara,RU:
-1. Местами высокая пожарная опасность event:Пожарная опасность severity:Moderate urgency:Immediate effective:10.08.2025 15:05:00 expires:14.08.2025 19:00:00
-2. В ближайшие 1-3 часа местами ожидается гроза event:Гроза severity:Moderate urgency:Immediate effective:13.08.2025 5:06:00 expires:13.08.2025 22:00:00
-3. При грозе местами шквалистое усиление ветра порывы 15-20 м/с event:Ветер severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
-4. Местами ливень event:Дождь severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+1. РњРµСЃС‚Р°РјРё РІС‹СЃРѕРєР°СЏ РїРѕР¶Р°СЂРЅР°СЏ РѕРїР°СЃРЅРѕСЃС‚СЊ event:РџРѕР¶Р°СЂРЅР°СЏ РѕРїР°СЃРЅРѕСЃС‚СЊ severity:Moderate urgency:Immediate effective:10.08.2025 15:05:00 expires:14.08.2025 19:00:00
+2. Р’ Р±Р»РёР¶Р°Р№С€РёРµ 1-3 С‡Р°СЃР° РјРµСЃС‚Р°РјРё РѕР¶РёРґР°РµС‚СЃСЏ РіСЂРѕР·Р° event:Р“СЂРѕР·Р° severity:Moderate urgency:Immediate effective:13.08.2025 5:06:00 expires:13.08.2025 22:00:00
+3. РџСЂРё РіСЂРѕР·Рµ РјРµСЃС‚Р°РјРё С€РєРІР°Р»РёСЃС‚РѕРµ СѓСЃРёР»РµРЅРёРµ РІРµС‚СЂР° РїРѕСЂС‹РІС‹ 15-20 Рј/СЃ event:Р’РµС‚РµСЂ severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+4. РњРµСЃС‚Р°РјРё Р»РёРІРµРЅСЊ event:Р”РѕР¶РґСЊ severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
 
 
 I implemented GetCurrentWeather and GetWeatherForecast using the OpenWeatherMap API, but this API does not allow free usage for alerts, so I implemented GetWeatherAlerts using api.weatherapi.com.
