@@ -12,6 +12,8 @@ var builder = Host.CreateApplicationBuilder(args);
 
 // Serilog configuration
 Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("System.Net.Http.HttpClient", Serilog.Events.LogEventLevel.Warning) // tun off information logs from  HttpClient
     .WriteTo.File(
         path: "logs/server-.log",
         outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level}] {SourceContext} {Message}{NewLine}{Exception}",
@@ -19,7 +21,6 @@ Log.Logger = new LoggerConfiguration()
         fileSizeLimitBytes: 1_000_000,
         retainedFileCountLimit: 7,
         rollOnFileSizeLimit: true)
-    .MinimumLevel.Debug()
     .CreateLogger();
 
 // Connect Serilog to DI
@@ -32,7 +33,6 @@ builder.Services.AddHttpClient();
 builder.Services
     .AddMcpServer()
     .WithStdioServerTransport()
-    .WithTools<RandomNumberTools>()
     .WithTools<WeatherTools>();
 
 builder.Services.AddSingleton<WeatherTools>();

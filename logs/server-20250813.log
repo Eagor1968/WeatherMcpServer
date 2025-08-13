@@ -1,0 +1,65 @@
+2025-08-13 17:30:08 [Information] WeatherMcpServer.Tools.WeatherTools Requesting weather for: "Samara,RU"
+2025-08-13 17:30:08 [Debug] WeatherMcpServer.Tools.WeatherTools Weather response: OpenWeatherResponse { Main: CurrentWeatherMainData { Temp: 22.56, Humidity: 51 }, Weather: [WeatherDescription { Description: "broken clouds" }] }
+2025-08-13 17:30:08 [Information]  Debug call current weather: "Current weather in Samara: 22,56°C, broken clouds"
+2025-08-13 17:30:08 [Information] WeatherMcpServer.Tools.WeatherTools Requesting forecast for: "Samara,RU"
+2025-08-13 17:30:08 [Information]  Debug call forecast: "Forecast in Samara,RU: 
+Date/Time=13.08.25 19:00, Temperature:23,0, light rain
+Date/Time=13.08.25 22:00, Temperature:19,2, scattered clouds
+Date/Time=14.08.25 01:00, Temperature:15,1, light rain
+Date/Time=14.08.25 04:00, Temperature:14,3, few clouds
+Date/Time=14.08.25 07:00, Temperature:16,2, broken clouds
+Date/Time=14.08.25 10:00, Temperature:21,5, broken clouds
+Date/Time=14.08.25 13:00, Temperature:24,7, few clouds
+Date/Time=14.08.25 16:00, Temperature:23,6, scattered clouds
+Date/Time=14.08.25 19:00, Temperature:20,7, scattered clouds
+Date/Time=14.08.25 22:00, Temperature:15,5, light rain
+Date/Time=15.08.25 01:00, Temperature:14,2, light rain
+Date/Time=15.08.25 04:00, Temperature:13,8, light rain
+Date/Time=15.08.25 07:00, Temperature:15,6, light rain
+Date/Time=15.08.25 10:00, Temperature:19,7, light rain
+Date/Time=15.08.25 13:00, Temperature:22,5, moderate rain
+Date/Time=15.08.25 16:00, Temperature:23,2, light rain
+Date/Time=15.08.25 19:00, Temperature:21,5, scattered clouds
+Date/Time=15.08.25 22:00, Temperature:16,8, scattered clouds
+Date/Time=16.08.25 01:00, Temperature:15,1, clear sky
+Date/Time=16.08.25 04:00, Temperature:13,6, clear sky
+Date/Time=16.08.25 07:00, Temperature:15,7, broken clouds
+Date/Time=16.08.25 10:00, Temperature:20,9, broken clouds
+Date/Time=16.08.25 13:00, Temperature:23,3, light rain
+Date/Time=16.08.25 16:00, Temperature:23,1, scattered clouds
+Date/Time=16.08.25 19:00, Temperature:20,2, broken clouds
+Date/Time=16.08.25 22:00, Temperature:17,9, broken clouds
+Date/Time=17.08.25 01:00, Temperature:15,2, broken clouds
+Date/Time=17.08.25 04:00, Temperature:16,4, broken clouds
+Date/Time=17.08.25 07:00, Temperature:16,7, overcast clouds
+Date/Time=17.08.25 10:00, Temperature:17,9, overcast clouds
+Date/Time=17.08.25 13:00, Temperature:23,0, overcast clouds
+Date/Time=17.08.25 16:00, Temperature:23,4, overcast clouds
+Date/Time=17.08.25 19:00, Temperature:19,5, overcast clouds
+Date/Time=17.08.25 22:00, Temperature:17,4, overcast clouds
+Date/Time=18.08.25 01:00, Temperature:16,6, overcast clouds
+Date/Time=18.08.25 04:00, Temperature:15,9, light rain
+Date/Time=18.08.25 07:00, Temperature:17,2, light rain
+Date/Time=18.08.25 10:00, Temperature:25,1, broken clouds
+Date/Time=18.08.25 13:00, Temperature:30,4, overcast clouds
+Date/Time=18.08.25 16:00, Temperature:32,3, overcast clouds"
+2025-08-13 17:30:09 [Information]  Debug call alerts: "Alerts found in Samara,RU:
+1. Местами высокая пожарная опасность event:Пожарная опасность severity:Moderate urgency:Immediate effective:10.08.2025 15:05:00 expires:14.08.2025 19:00:00
+2. В ближайшие 1-3 часа местами ожидается гроза event:Гроза severity:Moderate urgency:Immediate effective:13.08.2025 5:06:00 expires:13.08.2025 22:00:00
+3. При грозе местами шквалистое усиление ветра порывы 15-20 м/с event:Ветер severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+4. Местами ливень event:Дождь severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+"
+2025-08-13 17:30:09 [Debug] Microsoft.Extensions.Hosting.Internal.Host Hosting starting
+2025-08-13 17:30:09 [Information] ModelContextProtocol.Server.StdioServerTransport "Server (stream) (WeatherMcpServer)" transport reading messages.
+2025-08-13 17:30:09 [Information] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2025-08-13 17:30:09 [Information] Microsoft.Hosting.Lifetime Hosting environment: "Production"
+2025-08-13 17:30:09 [Information] Microsoft.Hosting.Lifetime Content root path: "C:\Projects\dotnet-test-assignment\WeatherMcpServer"
+2025-08-13 17:30:09 [Debug] Microsoft.Extensions.Hosting.Internal.Host Hosting started
+2025-08-13 17:30:40 [Information] Microsoft.Hosting.Lifetime Application is shutting down...
+2025-08-13 17:30:40 [Information] ModelContextProtocol.Server.StdioServerTransport "Server (stream) (WeatherMcpServer)" transport completed reading messages.
+2025-08-13 17:30:40 [Debug] Microsoft.Extensions.Hosting.Internal.Host Hosting stopping
+2025-08-13 17:30:40 [Information] ModelContextProtocol.Server.McpServer "Server (WeatherMcpServer 1.0.0.0)" shutting down.
+2025-08-13 17:30:40 [Information] ModelContextProtocol.Server.McpServer "Server (WeatherMcpServer 1.0.0.0)" shut down.
+2025-08-13 17:30:40 [Debug] Microsoft.Extensions.Hosting.Internal.Host Hosting stopped
+2025-08-13 17:30:40 [Information] ModelContextProtocol.Server.StdioServerTransport "Server (stream) (WeatherMcpServer)" shutting down.
+2025-08-13 17:30:40 [Information] ModelContextProtocol.Server.StdioServerTransport "Server (stream) (WeatherMcpServer)" shut down.

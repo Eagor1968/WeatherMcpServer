@@ -1,85 +1,38 @@
-# MCP Server
+-- Complete source code with proper project structure
+source code is here https://github.com/Eagor1968/WeatherMcpServer
+-- Instructions for setup and configuration
+Dotnet 9.0 should be installsed
+to build:
+dotnet build
 
-This README was created using the C# MCP server project template. It demonstrates how you can easily create an MCP server using C# and publish it as a NuGet package.
+to run:
+dotnet run
 
-See [aka.ms/nuget/mcp/guide](https://aka.ms/nuget/mcp/guide) for the full guide.
+logs are contained in 
+WeatherMcpServer\logs\server-202508DD.log 
 
-Please note that this template is currently in an early preview stage. If you have feedback, please take a [brief survey](http://aka.ms/dotnet-mcp-template-survey).
+-- Example usage or demo of the working server:
 
-## Checklist before publishing to NuGet.org
+2025-08-13 17:30:08 [Information]  Debug call forecast: "Forecast in Samara,RU: 
+Date/Time=13.08.25 19:00, Temperature:23,0, light rain
+....
+Date/Time=18.08.25 16:00, Temperature:32,3, overcast clouds"
 
-- Test the MCP server locally using the steps below.
-- Update the package metadata in the .csproj file, in particular the `<PackageId>`.
-- Update `.mcp/server.json` to declare your MCP server's inputs.
-  - See [configuring inputs](https://aka.ms/nuget/mcp/guide/configuring-inputs) for more details.
-- Pack the project using `dotnet pack`.
+2025-08-13 17:30:09 [Information]  Debug call alerts: "Alerts found in Samara,RU:
+1. Местами высокая пожарная опасность event:Пожарная опасность severity:Moderate urgency:Immediate effective:10.08.2025 15:05:00 expires:14.08.2025 19:00:00
+2. В ближайшие 1-3 часа местами ожидается гроза event:Гроза severity:Moderate urgency:Immediate effective:13.08.2025 5:06:00 expires:13.08.2025 22:00:00
+3. При грозе местами шквалистое усиление ветра порывы 15-20 м/с event:Ветер severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+4. Местами ливень event:Дождь severity:Moderate urgency:Immediate effective:13.08.2025 5:07:00 expires:13.08.2025 22:00:00
+"
+2025-08-13 17:30:09 [Information] ModelContextProtocol.Server.StdioServerTransport "Server (stream) (WeatherMcpServer)" transport reading messages.
+2025-08-13 17:30:09 [Information] Microsoft.Hosting.Lifetime Application started. Press Ctrl+C to shut down.
+2025-08-13 17:30:09 [Information] Microsoft.Hosting.Lifetime Hosting environment: "Production"
+2025-08-13 17:30:09 [Information] Microsoft.Hosting.Lifetime Content root path: "C:\Projects\dotnet-test-assignment\WeatherMcpServer"
 
-The `bin/Release` directory will contain the package file (.nupkg), which can be [published to NuGet.org](https://learn.microsoft.com/nuget/nuget-org/publish-a-package).
 
-## Developing locally
+-- Brief documentation of implementation approach
+MCP Server is supposed to be used by MCP client integrated into AI especially in Code Pylot, but Code Pylot does not work in Russia so I had to create a MCP Client
+it is here https://github.com/Eagor1968/McpFullClient
 
-To test this MCP server from source code (locally) without using a built MCP server package, you can configure your IDE to run the project directly using `dotnet run`.
+I implemented GetCurrentWeather and GetWeatherForecast using openweathermap API but this API does not allow free of charge usage for alerts so I have implemented GetWeatherAlerts using api.weatherapi.com
 
-```json
-{
-  "servers": {
-    "WeatherMcpServer": {
-      "type": "stdio",
-      "command": "dotnet",
-      "args": [
-        "run",
-        "--project",
-        "<PATH TO PROJECT DIRECTORY>"
-      ]
-    }
-  }
-}
-```
-
-## Testing the MCP Server
-
-Once configured, you can ask Copilot Chat for a random number, for example, `Give me 3 random numbers`. It should prompt you to use the `get_random_number` tool on the `WeatherMcpServer` MCP server and show you the results.
-
-## Publishing to NuGet.org
-
-1. Run `dotnet pack -c Release` to create the NuGet package
-2. Publish to NuGet.org with `dotnet nuget push bin/Release/*.nupkg --api-key <your-api-key> --source https://api.nuget.org/v3/index.json`
-
-## Using the MCP Server from NuGet.org
-
-Once the MCP server package is published to NuGet.org, you can configure it in your preferred IDE. Both VS Code and Visual Studio use the `dnx` command to download and install the MCP server package from NuGet.org.
-
-- **VS Code**: Create a `<WORKSPACE DIRECTORY>/.vscode/mcp.json` file
-- **Visual Studio**: Create a `<SOLUTION DIRECTORY>\.mcp.json` file
-
-For both VS Code and Visual Studio, the configuration file uses the following server definition:
-
-```json
-{
-  "servers": {
-    "WeatherMcpServer": {
-      "type": "stdio",
-      "command": "dnx",
-      "args": [
-        "<your package ID here>",
-        "--version",
-        "<your package version here>",
-        "--yes"
-      ]
-    }
-  }
-}
-```
-
-## More information
-
-.NET MCP servers use the [ModelContextProtocol](https://www.nuget.org/packages/ModelContextProtocol) C# SDK. For more information about MCP:
-
-- [Official Documentation](https://modelcontextprotocol.io/)
-- [Protocol Specification](https://spec.modelcontextprotocol.io/)
-- [GitHub Organization](https://github.com/modelcontextprotocol)
-
-Refer to the VS Code or Visual Studio documentation for more information on configuring and using MCP servers:
-
-- [Use MCP servers in VS Code (Preview)](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
-- [Use MCP servers in Visual Studio (Preview)](https://learn.microsoft.com/visualstudio/ide/mcp-servers)
